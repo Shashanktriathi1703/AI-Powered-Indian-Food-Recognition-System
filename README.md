@@ -399,8 +399,7 @@ pip install -r requirements.txt
 > Model weights are not stored in git (GitHub 100MB limit).  
 > Download `best.pt` and place it at `models/weights/best.pt`.
 
-📥 **[Download best.pt from Google Drive](https://drive.google.com/your-link-here)**  
-*(Replace this link with your actual Drive share link)*
+📥 **[Download best.pt from Google Drive](https://drive.google.com/file/d/1hsCzp6v3fpoxZAE3DcRpuO7de6iALl71/view?usp=sharing)**  
 
 ```bash
 # After downloading:
