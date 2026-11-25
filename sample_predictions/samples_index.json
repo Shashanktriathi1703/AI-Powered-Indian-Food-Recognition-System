@@ -1,0 +1,99 @@
+[
+  {
+    "meal_id": "meal_01_thali.jpg",
+    "title": "Classic Thali",
+    "items_count": 5,
+    "items": [
+      "Dal",
+      "Salad",
+      "Paneer curry",
+      "Roti",
+      "Rice"
+    ],
+    "total_nutrition": {
+      "calories": 941.7,
+      "protein": 35.9,
+      "carbs": 147.8,
+      "fat": 22.3
+    },
+    "annotated_image": "meal_01_thali_annotated.jpg",
+    "json_response": "meal_01_thali_response.json"
+  },
+  {
+    "meal_id": "meal_02_punjabi.jpg",
+    "title": "Punjabi Feast",
+    "items_count": 5,
+    "items": [
+      "Salad",
+      "Roti",
+      "Paneer curry",
+      "Paneer curry",
+      "Rice"
+    ],
+    "total_nutrition": {
+      "calories": 1172.3,
+      "protein": 44,
+      "carbs": 122.2,
+      "fat": 57
+    },
+    "annotated_image": "meal_02_punjabi_annotated.jpg",
+    "json_response": "meal_02_punjabi_response.json"
+  },
+  {
+    "meal_id": "meal_03_south_indian.jpg",
+    "title": "South Indian Platter",
+    "items_count": 4,
+    "items": [
+      "Dal",
+      "Salad",
+      "Dosa",
+      "Idli"
+    ],
+    "total_nutrition": {
+      "calories": 427.2,
+      "protein": 21.7,
+      "carbs": 68.4,
+      "fat": 7.1
+    },
+    "annotated_image": "meal_03_south_indian_annotated.jpg",
+    "json_response": "meal_03_south_indian_response.json"
+  },
+  {
+    "meal_id": "meal_04_biryani_feast.jpg",
+    "title": "Biryani Feast",
+    "items_count": 4,
+    "items": [
+      "Salad",
+      "Dal",
+      "Biryani",
+      "Samosa"
+    ],
+    "total_nutrition": {
+      "calories": 1122.6,
+      "protein": 43.8,
+      "carbs": 146.2,
+      "fat": 41.6
+    },
+    "annotated_image": "meal_04_biryani_feast_annotated.jpg",
+    "json_response": "meal_04_biryani_feast_response.json"
+  },
+  {
+    "meal_id": "meal_05_evening_snack.jpg",
+    "title": "Snack Platter",
+    "items_count": 4,
+    "items": [
+      "Salad",
+      "Paneer curry",
+      "Samosa",
+      "Idli"
+    ],
+    "total_nutrition": {
+      "calories": 840.6,
+      "protein": 26,
+      "carbs": 81.5,
+      "fat": 46.1
+    },
+    "annotated_image": "meal_05_evening_snack_annotated.jpg",
+    "json_response": "meal_05_evening_snack_response.json"
+  }
+]

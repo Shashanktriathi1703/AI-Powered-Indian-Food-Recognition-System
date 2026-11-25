@@ -1,0 +1,77 @@
+{
+  "success": true,
+  "meal_items": [
+    {
+      "food_name": "Dal",
+      "confidence": 0.76,
+      "estimated_quantity_g": 250,
+      "nutrition": {
+        "calories": 260,
+        "protein": 17,
+        "carbs": 38,
+        "fat": 4.5
+      }
+    },
+    {
+      "food_name": "Roti",
+      "confidence": 0.46,
+      "estimated_quantity_g": 40,
+      "nutrition": {
+        "calories": 118.8,
+        "protein": 3.8,
+        "carbs": 22.4,
+        "fat": 1.5
+      }
+    },
+    {
+      "food_name": "Roti",
+      "confidence": 0.42,
+      "estimated_quantity_g": 65,
+      "nutrition": {
+        "calories": 193.1,
+        "protein": 6.2,
+        "carbs": 36.4,
+        "fat": 2.4
+      }
+    },
+    {
+      "food_name": "Biryani",
+      "confidence": 0.42,
+      "estimated_quantity_g": 450,
+      "nutrition": {
+        "calories": 742.5,
+        "protein": 27.9,
+        "carbs": 94.5,
+        "fat": 29.2
+      }
+    },
+    {
+      "food_name": "Dal",
+      "confidence": 0.38,
+      "estimated_quantity_g": 100,
+      "nutrition": {
+        "calories": 104,
+        "protein": 6.8,
+        "carbs": 15.2,
+        "fat": 1.8
+      }
+    },
+    {
+      "food_name": "Dal",
+      "confidence": 0.32,
+      "estimated_quantity_g": 170,
+      "nutrition": {
+        "calories": 176.8,
+        "protein": 11.6,
+        "carbs": 25.8,
+        "fat": 3.1
+      }
+    }
+  ],
+  "total_nutrition": {
+    "calories": 1595.2,
+    "protein": 73.3,
+    "carbs": 232.3,
+    "fat": 42.5
+  }
+}

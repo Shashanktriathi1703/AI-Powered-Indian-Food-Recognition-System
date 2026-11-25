@@ -1,0 +1,55 @@
+{
+  "success": true,
+  "meal_items": [
+    {
+      "food_name": "Idli",
+      "confidence": 0.55,
+      "estimated_quantity_g": 180,
+      "nutrition": {
+        "calories": 237.6,
+        "protein": 8.3,
+        "carbs": 46.8,
+        "fat": 0.7
+      }
+    },
+    {
+      "food_name": "Rice",
+      "confidence": 0.5,
+      "estimated_quantity_g": 350,
+      "nutrition": {
+        "calories": 455,
+        "protein": 9.5,
+        "carbs": 98.7,
+        "fat": 1.1
+      }
+    },
+    {
+      "food_name": "Samosa",
+      "confidence": 0.37,
+      "estimated_quantity_g": 260,
+      "nutrition": {
+        "calories": 681.2,
+        "protein": 9.1,
+        "carbs": 83.2,
+        "fat": 35.1
+      }
+    },
+    {
+      "food_name": "Rice",
+      "confidence": 0.35,
+      "estimated_quantity_g": 350,
+      "nutrition": {
+        "calories": 455,
+        "protein": 9.5,
+        "carbs": 98.7,
+        "fat": 1.1
+      }
+    }
+  ],
+  "total_nutrition": {
+    "calories": 1828.8,
+    "protein": 36.4,
+    "carbs": 327.4,
+    "fat": 38
+  }
+}

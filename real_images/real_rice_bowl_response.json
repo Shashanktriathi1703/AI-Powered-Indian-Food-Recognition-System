@@ -1,0 +1,33 @@
+{
+  "success": true,
+  "meal_items": [
+    {
+      "food_name": "Rice",
+      "confidence": 0.39,
+      "estimated_quantity_g": 350,
+      "nutrition": {
+        "calories": 455,
+        "protein": 9.5,
+        "carbs": 98.7,
+        "fat": 1.1
+      }
+    },
+    {
+      "food_name": "Chole",
+      "confidence": 0.27,
+      "estimated_quantity_g": 280,
+      "nutrition": {
+        "calories": 392,
+        "protein": 19.6,
+        "carbs": 56,
+        "fat": 9.8
+      }
+    }
+  ],
+  "total_nutrition": {
+    "calories": 847,
+    "protein": 29.1,
+    "carbs": 154.7,
+    "fat": 10.9
+  }
+}

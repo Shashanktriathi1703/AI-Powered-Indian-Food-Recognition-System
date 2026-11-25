@@ -1,0 +1,44 @@
+{
+  "success": true,
+  "meal_items": [
+    {
+      "food_name": "Dosa",
+      "confidence": 0.69,
+      "estimated_quantity_g": 100,
+      "nutrition": {
+        "calories": 168,
+        "protein": 3.9,
+        "carbs": 29,
+        "fat": 3.8
+      }
+    },
+    {
+      "food_name": "Dosa",
+      "confidence": 0.48,
+      "estimated_quantity_g": 60,
+      "nutrition": {
+        "calories": 100.8,
+        "protein": 2.3,
+        "carbs": 17.4,
+        "fat": 2.3
+      }
+    },
+    {
+      "food_name": "Idli",
+      "confidence": 0.46,
+      "estimated_quantity_g": 135,
+      "nutrition": {
+        "calories": 178.2,
+        "protein": 6.2,
+        "carbs": 35.1,
+        "fat": 0.5
+      }
+    }
+  ],
+  "total_nutrition": {
+    "calories": 447,
+    "protein": 12.4,
+    "carbs": 81.5,
+    "fat": 6.6
+  }
+}

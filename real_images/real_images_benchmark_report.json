@@ -1,0 +1,613 @@
+[
+  {
+    "image_filename": "real_biryani.jpg",
+    "dimensions": "800x911",
+    "inference_time_ms": 1229.66,
+    "items_count": 1,
+    "items": [
+      {
+        "food_name": "Roti",
+        "confidence": 0.41,
+        "estimated_quantity_g": 60,
+        "nutrition": {
+          "calories": 178.2,
+          "protein": 5.7,
+          "carbs": 33.6,
+          "fat": 2.2
+        }
+      }
+    ],
+    "total_nutrition": {
+      "calories": 178.2,
+      "protein": 5.7,
+      "carbs": 33.6,
+      "fat": 2.2
+    },
+    "annotated_image": "real_biryani_annotated.jpg",
+    "json_response": "real_biryani_response.json"
+  },
+  {
+    "image_filename": "real_chole_puri.jpg",
+    "dimensions": "800x450",
+    "inference_time_ms": 70.62,
+    "items_count": 5,
+    "items": [
+      {
+        "food_name": "Biryani",
+        "confidence": 0.88,
+        "estimated_quantity_g": 450,
+        "nutrition": {
+          "calories": 742.5,
+          "protein": 27.9,
+          "carbs": 94.5,
+          "fat": 29.2
+        }
+      },
+      {
+        "food_name": "Salad",
+        "confidence": 0.72,
+        "estimated_quantity_g": 25,
+        "nutrition": {
+          "calories": 7,
+          "protein": 0.3,
+          "carbs": 1.3,
+          "fat": 0.1
+        }
+      },
+      {
+        "food_name": "Rice",
+        "confidence": 0.53,
+        "estimated_quantity_g": 350,
+        "nutrition": {
+          "calories": 455,
+          "protein": 9.5,
+          "carbs": 98.7,
+          "fat": 1.1
+        }
+      },
+      {
+        "food_name": "Rice",
+        "confidence": 0.47,
+        "estimated_quantity_g": 190,
+        "nutrition": {
+          "calories": 247,
+          "protein": 5.1,
+          "carbs": 53.6,
+          "fat": 0.6
+        }
+      },
+      {
+        "food_name": "Salad",
+        "confidence": 0.41,
+        "estimated_quantity_g": 55,
+        "nutrition": {
+          "calories": 15.4,
+          "protein": 0.6,
+          "carbs": 2.9,
+          "fat": 0.2
+        }
+      }
+    ],
+    "total_nutrition": {
+      "calories": 1466.9,
+      "protein": 43.4,
+      "carbs": 251,
+      "fat": 31.2
+    },
+    "annotated_image": "real_chole_puri_annotated.jpg",
+    "json_response": "real_chole_puri_response.json"
+  },
+  {
+    "image_filename": "real_dal_bowl.jpg",
+    "dimensions": "800x1200",
+    "inference_time_ms": 62.37,
+    "items_count": 3,
+    "items": [
+      {
+        "food_name": "Dosa",
+        "confidence": 0.69,
+        "estimated_quantity_g": 100,
+        "nutrition": {
+          "calories": 168,
+          "protein": 3.9,
+          "carbs": 29,
+          "fat": 3.8
+        }
+      },
+      {
+        "food_name": "Dosa",
+        "confidence": 0.48,
+        "estimated_quantity_g": 60,
+        "nutrition": {
+          "calories": 100.8,
+          "protein": 2.3,
+          "carbs": 17.4,
+          "fat": 2.3
+        }
+      },
+      {
+        "food_name": "Idli",
+        "confidence": 0.46,
+        "estimated_quantity_g": 135,
+        "nutrition": {
+          "calories": 178.2,
+          "protein": 6.2,
+          "carbs": 35.1,
+          "fat": 0.5
+        }
+      }
+    ],
+    "total_nutrition": {
+      "calories": 447,
+      "protein": 12.4,
+      "carbs": 81.5,
+      "fat": 6.6
+    },
+    "annotated_image": "real_dal_bowl_annotated.jpg",
+    "json_response": "real_dal_bowl_response.json"
+  },
+  {
+    "image_filename": "real_dosa_platter.jpg",
+    "dimensions": "800x533",
+    "inference_time_ms": 66.12,
+    "items_count": 7,
+    "items": [
+      {
+        "food_name": "Rice",
+        "confidence": 0.48,
+        "estimated_quantity_g": 205,
+        "nutrition": {
+          "calories": 266.5,
+          "protein": 5.5,
+          "carbs": 57.8,
+          "fat": 0.6
+        }
+      },
+      {
+        "food_name": "Biryani",
+        "confidence": 0.42,
+        "estimated_quantity_g": 450,
+        "nutrition": {
+          "calories": 742.5,
+          "protein": 27.9,
+          "carbs": 94.5,
+          "fat": 29.2
+        }
+      },
+      {
+        "food_name": "Rice",
+        "confidence": 0.41,
+        "estimated_quantity_g": 90,
+        "nutrition": {
+          "calories": 117,
+          "protein": 2.4,
+          "carbs": 25.4,
+          "fat": 0.3
+        }
+      },
+      {
+        "food_name": "Salad",
+        "confidence": 0.35,
+        "estimated_quantity_g": 25,
+        "nutrition": {
+          "calories": 7,
+          "protein": 0.3,
+          "carbs": 1.3,
+          "fat": 0.1
+        }
+      },
+      {
+        "food_name": "Dosa",
+        "confidence": 0.31,
+        "estimated_quantity_g": 65,
+        "nutrition": {
+          "calories": 109.2,
+          "protein": 2.5,
+          "carbs": 18.9,
+          "fat": 2.5
+        }
+      },
+      {
+        "food_name": "Rice",
+        "confidence": 0.3,
+        "estimated_quantity_g": 350,
+        "nutrition": {
+          "calories": 455,
+          "protein": 9.5,
+          "carbs": 98.7,
+          "fat": 1.1
+        }
+      },
+      {
+        "food_name": "Rice",
+        "confidence": 0.28,
+        "estimated_quantity_g": 130,
+        "nutrition": {
+          "calories": 169,
+          "protein": 3.5,
+          "carbs": 36.7,
+          "fat": 0.4
+        }
+      }
+    ],
+    "total_nutrition": {
+      "calories": 1866.2,
+      "protein": 51.6,
+      "carbs": 333.3,
+      "fat": 34.2
+    },
+    "annotated_image": "real_dosa_platter_annotated.jpg",
+    "json_response": "real_dosa_platter_response.json"
+  },
+  {
+    "image_filename": "real_paneer_curry.jpg",
+    "dimensions": "800x1200",
+    "inference_time_ms": 51.18,
+    "items_count": 3,
+    "items": [
+      {
+        "food_name": "Idli",
+        "confidence": 0.41,
+        "estimated_quantity_g": 225,
+        "nutrition": {
+          "calories": 297,
+          "protein": 10.3,
+          "carbs": 58.5,
+          "fat": 0.9
+        }
+      },
+      {
+        "food_name": "Rice",
+        "confidence": 0.29,
+        "estimated_quantity_g": 350,
+        "nutrition": {
+          "calories": 455,
+          "protein": 9.5,
+          "carbs": 98.7,
+          "fat": 1.1
+        }
+      },
+      {
+        "food_name": "Biryani",
+        "confidence": 0.28,
+        "estimated_quantity_g": 450,
+        "nutrition": {
+          "calories": 742.5,
+          "protein": 27.9,
+          "carbs": 94.5,
+          "fat": 29.2
+        }
+      }
+    ],
+    "total_nutrition": {
+      "calories": 1494.5,
+      "protein": 47.7,
+      "carbs": 251.7,
+      "fat": 31.2
+    },
+    "annotated_image": "real_paneer_curry_annotated.jpg",
+    "json_response": "real_paneer_curry_response.json"
+  },
+  {
+    "image_filename": "real_rice_bowl.jpg",
+    "dimensions": "800x1200",
+    "inference_time_ms": 40.96,
+    "items_count": 2,
+    "items": [
+      {
+        "food_name": "Rice",
+        "confidence": 0.39,
+        "estimated_quantity_g": 350,
+        "nutrition": {
+          "calories": 455,
+          "protein": 9.5,
+          "carbs": 98.7,
+          "fat": 1.1
+        }
+      },
+      {
+        "food_name": "Chole",
+        "confidence": 0.27,
+        "estimated_quantity_g": 280,
+        "nutrition": {
+          "calories": 392,
+          "protein": 19.6,
+          "carbs": 56,
+          "fat": 9.8
+        }
+      }
+    ],
+    "total_nutrition": {
+      "calories": 847,
+      "protein": 29.1,
+      "carbs": 154.7,
+      "fat": 10.9
+    },
+    "annotated_image": "real_rice_bowl_annotated.jpg",
+    "json_response": "real_rice_bowl_response.json"
+  },
+  {
+    "image_filename": "real_roti_curry.jpg",
+    "dimensions": "800x533",
+    "inference_time_ms": 52.71,
+    "items_count": 4,
+    "items": [
+      {
+        "food_name": "Biryani",
+        "confidence": 0.86,
+        "estimated_quantity_g": 450,
+        "nutrition": {
+          "calories": 742.5,
+          "protein": 27.9,
+          "carbs": 94.5,
+          "fat": 29.2
+        }
+      },
+      {
+        "food_name": "Dosa",
+        "confidence": 0.4,
+        "estimated_quantity_g": 60,
+        "nutrition": {
+          "calories": 100.8,
+          "protein": 2.3,
+          "carbs": 17.4,
+          "fat": 2.3
+        }
+      },
+      {
+        "food_name": "Salad",
+        "confidence": 0.32,
+        "estimated_quantity_g": 30,
+        "nutrition": {
+          "calories": 8.4,
+          "protein": 0.3,
+          "carbs": 1.6,
+          "fat": 0.1
+        }
+      },
+      {
+        "food_name": "Rice",
+        "confidence": 0.28,
+        "estimated_quantity_g": 240,
+        "nutrition": {
+          "calories": 312,
+          "protein": 6.5,
+          "carbs": 67.7,
+          "fat": 0.7
+        }
+      }
+    ],
+    "total_nutrition": {
+      "calories": 1163.7,
+      "protein": 37,
+      "carbs": 181.2,
+      "fat": 32.3
+    },
+    "annotated_image": "real_roti_curry_annotated.jpg",
+    "json_response": "real_roti_curry_response.json"
+  },
+  {
+    "image_filename": "real_samosa_plate.jpg",
+    "dimensions": "800x533",
+    "inference_time_ms": 44.55,
+    "items_count": 4,
+    "items": [
+      {
+        "food_name": "Idli",
+        "confidence": 0.55,
+        "estimated_quantity_g": 180,
+        "nutrition": {
+          "calories": 237.6,
+          "protein": 8.3,
+          "carbs": 46.8,
+          "fat": 0.7
+        }
+      },
+      {
+        "food_name": "Rice",
+        "confidence": 0.5,
+        "estimated_quantity_g": 350,
+        "nutrition": {
+          "calories": 455,
+          "protein": 9.5,
+          "carbs": 98.7,
+          "fat": 1.1
+        }
+      },
+      {
+        "food_name": "Samosa",
+        "confidence": 0.37,
+        "estimated_quantity_g": 260,
+        "nutrition": {
+          "calories": 681.2,
+          "protein": 9.1,
+          "carbs": 83.2,
+          "fat": 35.1
+        }
+      },
+      {
+        "food_name": "Rice",
+        "confidence": 0.35,
+        "estimated_quantity_g": 350,
+        "nutrition": {
+          "calories": 455,
+          "protein": 9.5,
+          "carbs": 98.7,
+          "fat": 1.1
+        }
+      }
+    ],
+    "total_nutrition": {
+      "calories": 1828.8,
+      "protein": 36.4,
+      "carbs": 327.4,
+      "fat": 38
+    },
+    "annotated_image": "real_samosa_plate_annotated.jpg",
+    "json_response": "real_samosa_plate_response.json"
+  },
+  {
+    "image_filename": "real_south_indian.jpg",
+    "dimensions": "800x600",
+    "inference_time_ms": 71.5,
+    "items_count": 6,
+    "items": [
+      {
+        "food_name": "Rice",
+        "confidence": 0.79,
+        "estimated_quantity_g": 335,
+        "nutrition": {
+          "calories": 435.5,
+          "protein": 9,
+          "carbs": 94.5,
+          "fat": 1
+        }
+      },
+      {
+        "food_name": "Roti",
+        "confidence": 0.55,
+        "estimated_quantity_g": 40,
+        "nutrition": {
+          "calories": 118.8,
+          "protein": 3.8,
+          "carbs": 22.4,
+          "fat": 1.5
+        }
+      },
+      {
+        "food_name": "Dal",
+        "confidence": 0.54,
+        "estimated_quantity_g": 145,
+        "nutrition": {
+          "calories": 150.8,
+          "protein": 9.9,
+          "carbs": 22,
+          "fat": 2.6
+        }
+      },
+      {
+        "food_name": "Idli",
+        "confidence": 0.48,
+        "estimated_quantity_g": 90,
+        "nutrition": {
+          "calories": 118.8,
+          "protein": 4.1,
+          "carbs": 23.4,
+          "fat": 0.4
+        }
+      },
+      {
+        "food_name": "Rice",
+        "confidence": 0.39,
+        "estimated_quantity_g": 110,
+        "nutrition": {
+          "calories": 143,
+          "protein": 3,
+          "carbs": 31,
+          "fat": 0.3
+        }
+      },
+      {
+        "food_name": "Rice",
+        "confidence": 0.36,
+        "estimated_quantity_g": 305,
+        "nutrition": {
+          "calories": 396.5,
+          "protein": 8.2,
+          "carbs": 86,
+          "fat": 0.9
+        }
+      }
+    ],
+    "total_nutrition": {
+      "calories": 1363.4,
+      "protein": 38,
+      "carbs": 279.3,
+      "fat": 6.7
+    },
+    "annotated_image": "real_south_indian_annotated.jpg",
+    "json_response": "real_south_indian_response.json"
+  },
+  {
+    "image_filename": "real_thali_curry_rice.jpg",
+    "dimensions": "800x1066",
+    "inference_time_ms": 71.95,
+    "items_count": 6,
+    "items": [
+      {
+        "food_name": "Dal",
+        "confidence": 0.76,
+        "estimated_quantity_g": 250,
+        "nutrition": {
+          "calories": 260,
+          "protein": 17,
+          "carbs": 38,
+          "fat": 4.5
+        }
+      },
+      {
+        "food_name": "Roti",
+        "confidence": 0.46,
+        "estimated_quantity_g": 40,
+        "nutrition": {
+          "calories": 118.8,
+          "protein": 3.8,
+          "carbs": 22.4,
+          "fat": 1.5
+        }
+      },
+      {
+        "food_name": "Roti",
+        "confidence": 0.42,
+        "estimated_quantity_g": 65,
+        "nutrition": {
+          "calories": 193.1,
+          "protein": 6.2,
+          "carbs": 36.4,
+          "fat": 2.4
+        }
+      },
+      {
+        "food_name": "Biryani",
+        "confidence": 0.42,
+        "estimated_quantity_g": 450,
+        "nutrition": {
+          "calories": 742.5,
+          "protein": 27.9,
+          "carbs": 94.5,
+          "fat": 29.2
+        }
+      },
+      {
+        "food_name": "Dal",
+        "confidence": 0.38,
+        "estimated_quantity_g": 100,
+        "nutrition": {
+          "calories": 104,
+          "protein": 6.8,
+          "carbs": 15.2,
+          "fat": 1.8
+        }
+      },
+      {
+        "food_name": "Dal",
+        "confidence": 0.32,
+        "estimated_quantity_g": 170,
+        "nutrition": {
+          "calories": 176.8,
+          "protein": 11.6,
+          "carbs": 25.8,
+          "fat": 3.1
+        }
+      }
+    ],
+    "total_nutrition": {
+      "calories": 1595.2,
+      "protein": 73.3,
+      "carbs": 232.3,
+      "fat": 42.5
+    },
+    "annotated_image": "real_thali_curry_rice_annotated.jpg",
+    "json_response": "real_thali_curry_rice_response.json"
+  }
+]

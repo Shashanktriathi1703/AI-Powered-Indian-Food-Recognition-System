@@ -1,0 +1,197 @@
+{
+  "source": "ICMR - National Institute of Nutrition (NIN) / Indian Food Composition Tables (IFCT 2017) & USDA FoodData Central",
+  "version": "1.0.0",
+  "items": {
+    "rice": {
+      "display_name": "Rice",
+      "category": "Grains & Cereals",
+      "reference_per_100g": {
+        "calories": 130.0,
+        "protein": 2.7,
+        "carbs": 28.2,
+        "fat": 0.3
+      },
+      "density_g_per_cm3": 0.85,
+      "shape_factor": 0.65,
+      "typical_depth_cm": 2.6,
+      "standard_serving_g": 150.0,
+      "min_portion_g": 50.0,
+      "max_portion_g": 350.0,
+      "aliases": ["steamed rice", "boiled rice", "white rice", "chawal", "bhat"]
+    },
+    "dal": {
+      "display_name": "Dal",
+      "category": "Pulses & Legumes",
+      "reference_per_100g": {
+        "calories": 104.0,
+        "protein": 6.8,
+        "carbs": 15.2,
+        "fat": 1.8
+      },
+      "density_g_per_cm3": 1.02,
+      "shape_factor": 0.85,
+      "typical_depth_cm": 2.8,
+      "standard_serving_g": 100.0,
+      "min_portion_g": 40.0,
+      "max_portion_g": 250.0,
+      "aliases": ["yellow dal", "dal tadka", "dal fry", "moong dal", "toor dal", "sambar", "lentil soup"]
+    },
+    "roti": {
+      "display_name": "Roti",
+      "category": "Breads & Flatbreads",
+      "reference_per_100g": {
+        "calories": 297.0,
+        "protein": 9.5,
+        "carbs": 56.0,
+        "fat": 3.7
+      },
+      "density_g_per_cm3": 0.60,
+      "shape_factor": 0.90,
+      "typical_depth_cm": 0.3,
+      "piece_weight_g": 40.0,
+      "standard_serving_g": 80.0,
+      "min_portion_g": 35.0,
+      "max_portion_g": 200.0,
+      "aliases": ["chapati", "phulka", "indian flatbread", "roti", "tandoori roti"]
+    },
+    "paneer_curry": {
+      "display_name": "Paneer curry",
+      "category": "Dairy & Vegetarian Curries",
+      "reference_per_100g": {
+        "calories": 185.0,
+        "protein": 8.5,
+        "carbs": 7.2,
+        "fat": 14.0
+      },
+      "density_g_per_cm3": 1.05,
+      "shape_factor": 0.80,
+      "typical_depth_cm": 2.5,
+      "standard_serving_g": 120.0,
+      "min_portion_g": 60.0,
+      "max_portion_g": 280.0,
+      "aliases": ["paneer butter masala", "shahi paneer", "kadai paneer", "matar paneer", "palak paneer", "cottage cheese curry"]
+    },
+    "salad": {
+      "display_name": "Salad",
+      "category": "Vegetables & Greens",
+      "reference_per_100g": {
+        "calories": 28.0,
+        "protein": 1.1,
+        "carbs": 5.2,
+        "fat": 0.3
+      },
+      "density_g_per_cm3": 0.35,
+      "shape_factor": 0.50,
+      "typical_depth_cm": 2.0,
+      "standard_serving_g": 50.0,
+      "min_portion_g": 25.0,
+      "max_portion_g": 150.0,
+      "aliases": ["green salad", "kachumber", "cucumber salad", "onion salad", "sliced veggies"]
+    },
+    "chole": {
+      "display_name": "Chole",
+      "category": "Pulses & Legumes",
+      "reference_per_100g": {
+        "calories": 140.0,
+        "protein": 7.0,
+        "carbs": 20.0,
+        "fat": 3.5
+      },
+      "density_g_per_cm3": 1.02,
+      "shape_factor": 0.80,
+      "typical_depth_cm": 2.6,
+      "standard_serving_g": 130.0,
+      "min_portion_g": 60.0,
+      "max_portion_g": 280.0,
+      "aliases": ["chana masala", "chickpea curry", "kabuli chana"]
+    },
+    "biryani": {
+      "display_name": "Biryani",
+      "category": "Rice Specialties",
+      "reference_per_100g": {
+        "calories": 165.0,
+        "protein": 6.2,
+        "carbs": 21.0,
+        "fat": 6.5
+      },
+      "density_g_per_cm3": 0.88,
+      "shape_factor": 0.70,
+      "typical_depth_cm": 3.0,
+      "standard_serving_g": 220.0,
+      "min_portion_g": 100.0,
+      "max_portion_g": 450.0,
+      "aliases": ["veg biryani", "hyderabadi biryani", "pulao", "pilaf"]
+    },
+    "samosa": {
+      "display_name": "Samosa",
+      "category": "Snacks & Appetizers",
+      "reference_per_100g": {
+        "calories": 262.0,
+        "protein": 3.5,
+        "carbs": 32.0,
+        "fat": 13.5
+      },
+      "density_g_per_cm3": 0.65,
+      "shape_factor": 0.75,
+      "typical_depth_cm": 3.5,
+      "piece_weight_g": 65.0,
+      "standard_serving_g": 130.0,
+      "min_portion_g": 50.0,
+      "max_portion_g": 260.0,
+      "aliases": ["punjabi samosa", "aloo samosa"]
+    },
+    "idli": {
+      "display_name": "Idli",
+      "category": "Fermented Breakfast Items",
+      "reference_per_100g": {
+        "calories": 132.0,
+        "protein": 4.6,
+        "carbs": 26.0,
+        "fat": 0.4
+      },
+      "density_g_per_cm3": 0.75,
+      "shape_factor": 0.70,
+      "typical_depth_cm": 2.0,
+      "piece_weight_g": 45.0,
+      "standard_serving_g": 90.0,
+      "min_portion_g": 40.0,
+      "max_portion_g": 250.0,
+      "aliases": ["steamed rice cake", "south indian idli"]
+    },
+    "dosa": {
+      "display_name": "Dosa",
+      "category": "Fermented Breakfast Items",
+      "reference_per_100g": {
+        "calories": 168.0,
+        "protein": 3.9,
+        "carbs": 29.0,
+        "fat": 3.8
+      },
+      "density_g_per_cm3": 0.50,
+      "shape_factor": 0.85,
+      "typical_depth_cm": 0.5,
+      "piece_weight_g": 90.0,
+      "standard_serving_g": 90.0,
+      "min_portion_g": 60.0,
+      "max_portion_g": 220.0,
+      "aliases": ["plain dosa", "masala dosa", "crispy crepe"]
+    },
+    "unknown": {
+      "display_name": "Unknown Food Item",
+      "category": "General Indian Dish Fallback",
+      "reference_per_100g": {
+        "calories": 135.0,
+        "protein": 4.5,
+        "carbs": 18.0,
+        "fat": 5.0
+      },
+      "density_g_per_cm3": 0.80,
+      "shape_factor": 0.70,
+      "typical_depth_cm": 2.2,
+      "standard_serving_g": 100.0,
+      "min_portion_g": 40.0,
+      "max_portion_g": 300.0,
+      "aliases": ["fallback", "unsupported food"]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+path: C:/Users/Shashank Tripathi/.gemini/antigravity/scratch/nutriiya-indian-food-ai/data/processed
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: rice
+  1: dal
+  2: roti
+  3: paneer_curry
+  4: salad
+  5: chole
+  6: biryani
+  7: samosa
+  8: idli
+  9: dosa

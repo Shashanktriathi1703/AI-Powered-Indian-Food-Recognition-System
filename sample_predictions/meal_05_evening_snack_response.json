@@ -1,0 +1,55 @@
+{
+  "success": true,
+  "meal_items": [
+    {
+      "food_name": "Salad",
+      "confidence": 0.99,
+      "estimated_quantity_g": 40,
+      "nutrition": {
+        "calories": 11.2,
+        "protein": 0.4,
+        "carbs": 2.1,
+        "fat": 0.1
+      }
+    },
+    {
+      "food_name": "Paneer curry",
+      "confidence": 0.86,
+      "estimated_quantity_g": 200,
+      "nutrition": {
+        "calories": 370,
+        "protein": 17,
+        "carbs": 14.4,
+        "fat": 28
+      }
+    },
+    {
+      "food_name": "Samosa",
+      "confidence": 0.85,
+      "estimated_quantity_g": 130,
+      "nutrition": {
+        "calories": 340.6,
+        "protein": 4.5,
+        "carbs": 41.6,
+        "fat": 17.6
+      }
+    },
+    {
+      "food_name": "Idli",
+      "confidence": 0.63,
+      "estimated_quantity_g": 90,
+      "nutrition": {
+        "calories": 118.8,
+        "protein": 4.1,
+        "carbs": 23.4,
+        "fat": 0.4
+      }
+    }
+  ],
+  "total_nutrition": {
+    "calories": 840.6,
+    "protein": 26,
+    "carbs": 81.5,
+    "fat": 46.1
+  }
+}

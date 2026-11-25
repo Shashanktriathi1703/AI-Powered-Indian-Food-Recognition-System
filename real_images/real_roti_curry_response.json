@@ -1,0 +1,55 @@
+{
+  "success": true,
+  "meal_items": [
+    {
+      "food_name": "Biryani",
+      "confidence": 0.86,
+      "estimated_quantity_g": 450,
+      "nutrition": {
+        "calories": 742.5,
+        "protein": 27.9,
+        "carbs": 94.5,
+        "fat": 29.2
+      }
+    },
+    {
+      "food_name": "Dosa",
+      "confidence": 0.4,
+      "estimated_quantity_g": 60,
+      "nutrition": {
+        "calories": 100.8,
+        "protein": 2.3,
+        "carbs": 17.4,
+        "fat": 2.3
+      }
+    },
+    {
+      "food_name": "Salad",
+      "confidence": 0.32,
+      "estimated_quantity_g": 30,
+      "nutrition": {
+        "calories": 8.4,
+        "protein": 0.3,
+        "carbs": 1.6,
+        "fat": 0.1
+      }
+    },
+    {
+      "food_name": "Rice",
+      "confidence": 0.28,
+      "estimated_quantity_g": 240,
+      "nutrition": {
+        "calories": 312,
+        "protein": 6.5,
+        "carbs": 67.7,
+        "fat": 0.7
+      }
+    }
+  ],
+  "total_nutrition": {
+    "calories": 1163.7,
+    "protein": 37,
+    "carbs": 181.2,
+    "fat": 32.3
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "success": true,
+  "meal_items": [
+    {
+      "food_name": "Idli",
+      "confidence": 0.41,
+      "estimated_quantity_g": 225,
+      "nutrition": {
+        "calories": 297,
+        "protein": 10.3,
+        "carbs": 58.5,
+        "fat": 0.9
+      }
+    },
+    {
+      "food_name": "Rice",
+      "confidence": 0.29,
+      "estimated_quantity_g": 350,
+      "nutrition": {
+        "calories": 455,
+        "protein": 9.5,
+        "carbs": 98.7,
+        "fat": 1.1
+      }
+    },
+    {
+      "food_name": "Biryani",
+      "confidence": 0.28,
+      "estimated_quantity_g": 450,
+      "nutrition": {
+        "calories": 742.5,
+        "protein": 27.9,
+        "carbs": 94.5,
+        "fat": 29.2
+      }
+    }
+  ],
+  "total_nutrition": {
+    "calories": 1494.5,
+    "protein": 47.7,
+    "carbs": 251.7,
+    "fat": 31.2
+  }
+}

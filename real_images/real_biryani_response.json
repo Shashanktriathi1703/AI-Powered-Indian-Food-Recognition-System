@@ -1,0 +1,22 @@
+{
+  "success": true,
+  "meal_items": [
+    {
+      "food_name": "Roti",
+      "confidence": 0.41,
+      "estimated_quantity_g": 60,
+      "nutrition": {
+        "calories": 178.2,
+        "protein": 5.7,
+        "carbs": 33.6,
+        "fat": 2.2
+      }
+    }
+  ],
+  "total_nutrition": {
+    "calories": 178.2,
+    "protein": 5.7,
+    "carbs": 33.6,
+    "fat": 2.2
+  }
+}

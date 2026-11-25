@@ -1,0 +1,38 @@
+{
+  "dataset_name": "Nutriiya Indian Food Vision Dataset (NIFVD-v1)",
+  "version": "1.0.0",
+  "classes": [
+    "rice",
+    "dal",
+    "roti",
+    "paneer_curry",
+    "salad",
+    "chole",
+    "biryani",
+    "samosa",
+    "idli",
+    "dosa"
+  ],
+  "sources_and_licensing": {
+    "nutrition_composition": {
+      "source": "ICMR - National Institute of Nutrition (NIN) / Indian Food Composition Tables (IFCT 2017) & USDA FoodData Central",
+      "license": "Public domain / Open Research Data"
+    },
+    "visual_training_data": {
+      "methodology": "Composite Multi-Dish Thali Generator with photorealistic texture synthesis and spatial dish clustering, augmented with realistic lighting, specular reflection on steel thalis, food overlaps, and rotational variances.",
+      "license": "Open Source / MIT Compliant for Evaluation"
+    }
+  },
+  "splits": {
+    "train_ratio": 0.70,
+    "val_ratio": 0.15,
+    "test_ratio": 0.15
+  },
+  "preprocessing_pipeline": [
+    "Spatial resolution standardization to 640x640",
+    "RGB color-space normalization",
+    "Multi-dish composition onto standard circular thalis (diameter 28cm scale reference)",
+    "Color jittering (brightness, contrast, saturation) to simulate varying restaurant/home ambient lighting",
+    "Bounding box normalization into standard YOLO format [class_id, x_center, y_center, width, height]"
+  ]
+}
