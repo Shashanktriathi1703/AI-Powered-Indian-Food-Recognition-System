@@ -15,9 +15,8 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
+from config import REAL_IMAGES_DIR as REAL_DIR
 from models.pipeline import MealAnalyzerPipeline
-
-REAL_DIR = os.path.join(PROJECT_ROOT, "real_images")
 
 
 def evaluate_real_world_images():

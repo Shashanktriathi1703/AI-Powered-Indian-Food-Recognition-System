@@ -9,13 +9,13 @@ import time
 from typing import Dict, Any, Optional
 from PIL import Image
 
+from config import MODEL_WEIGHTS_PATH, NUTRITION_DB_PATH
 from models.food_detector import FoodDetector
 from models.portion_estimator import PortionEstimator
 from models.nutrition_calculator import NutritionCalculator
 
-BASE_DIR = r"C:\Users\Shashank Tripathi\.gemini\antigravity\scratch\nutriiya-indian-food-ai"
-DEFAULT_WEIGHTS = os.path.join(BASE_DIR, "models", "weights", "best.pt")
-DEFAULT_DB = os.path.join(BASE_DIR, "data", "nutrition_db.json")
+DEFAULT_WEIGHTS = MODEL_WEIGHTS_PATH
+DEFAULT_DB = NUTRITION_DB_PATH
 
 
 class MealAnalyzerPipeline:

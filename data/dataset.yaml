@@ -1,4 +1,4 @@
-path: C:/Users/Shashank Tripathi/.gemini/antigravity/scratch/nutriiya-indian-food-ai/data/processed
+path: ./processed
 train: images/train
 val: images/val
 test: images/test

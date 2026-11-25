@@ -5,11 +5,15 @@ Generates realistic multi-item Indian meals with YOLO bounding box annotations.
 """
 
 import os
+import sys
 import math
 import random
 import json
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from config import DATA_PROCESSED_DIR as OUTPUT_DIR
 
 CLASSES = [
     "rice",          # 0
@@ -25,8 +29,6 @@ CLASSES = [
 ]
 
 CLASS_TO_ID = {name: idx for idx, name in enumerate(CLASSES)}
-
-OUTPUT_DIR = r"C:\Users\Shashank Tripathi\.gemini\antigravity\scratch\nutriiya-indian-food-ai\data\processed"
 
 
 def draw_rice(draw, box, rng):

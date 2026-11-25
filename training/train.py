@@ -3,12 +3,18 @@ Nutriiya AI - Model Training & Fine-Tuning Pipeline
 Fine-tunes YOLOv8n on the Indian Food Vision Dataset.
 """
 import os
+import sys
 import shutil
 from ultralytics import YOLO
 
-DATASET_YAML = r"C:\Users\Shashank Tripathi\.gemini\antigravity\scratch\nutriiya-indian-food-ai\data\dataset.yaml"
-OUTPUT_WEIGHTS_DIR = r"C:\Users\Shashank Tripathi\.gemini\antigravity\scratch\nutriiya-indian-food-ai\models\weights"
-RUNS_DIR = r"C:\Users\Shashank Tripathi\.gemini\antigravity\scratch\nutriiya-indian-food-ai\runs"
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from config import (
+    DATASET_YAML_PATH as DATASET_YAML,
+    OUTPUT_WEIGHTS_DIR,
+    RUNS_DIR,
+    DATA_LABELS_DIR,
+    BASE_YOLO_WEIGHTS,
+)
 
 def run_training(epochs=6, batch_size=8, img_size=640):
     print("=================================================================")
@@ -18,7 +24,7 @@ def run_training(epochs=6, batch_size=8, img_size=640):
     print("=================================================================")
 
     # Clear old cache files
-    labels_dir = r"C:\Users\Shashank Tripathi\.gemini\antigravity\scratch\nutriiya-indian-food-ai\data\processed\labels"
+    labels_dir = DATA_LABELS_DIR
     for root, _, files in os.walk(labels_dir):
         for f in files:
             if f.endswith(".cache"):
@@ -28,7 +34,7 @@ def run_training(epochs=6, batch_size=8, img_size=640):
                     pass
 
     # Load pretrained YOLOv8 nano model
-    model = YOLO("yolov8n.pt")
+    model = YOLO(BASE_YOLO_WEIGHTS)
     
     # Train the model with real-world augmentations
     results = model.train(

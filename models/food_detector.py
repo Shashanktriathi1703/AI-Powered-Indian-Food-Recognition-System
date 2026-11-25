@@ -121,6 +121,7 @@ class FoodDetector:
             return []
 
         sorted_dets = sorted(detections, key=lambda x: x["confidence"], reverse=True)
+        kept = []
 
         def get_iou(b1, b2):
             x1, y1 = max(b1[0], b2[0]), max(b1[1], b2[1])

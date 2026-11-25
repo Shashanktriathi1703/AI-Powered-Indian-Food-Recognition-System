@@ -13,6 +13,7 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
+from config import DEFAULT_DEMO_IMAGE
 from models.pipeline import MealAnalyzerPipeline
 from models.portion_estimator import PortionEstimator
 from models.nutrition_calculator import NutritionCalculator
@@ -97,7 +98,7 @@ def test_portion_estimator():
 
 def test_pipeline_on_sample_thali():
     """Test full pipeline on the benchmark Nutriiya Thali image."""
-    img_path = os.path.join(PROJECT_ROOT, "sample_predictions", "meal_01_thali.jpg")
+    img_path = DEFAULT_DEMO_IMAGE
     assert os.path.exists(img_path), f"Benchmark image not found at {img_path}"
     
     pipeline = MealAnalyzerPipeline()
@@ -134,7 +135,7 @@ def test_fastapi_endpoints():
     assert len(data["supported_classes"]) == 10
     
     # Test /analyze-meal with sample image
-    img_path = os.path.join(PROJECT_ROOT, "sample_predictions", "meal_01_thali.jpg")
+    img_path = DEFAULT_DEMO_IMAGE
     with open(img_path, "rb") as f:
         resp = client.post(
             "/analyze-meal",

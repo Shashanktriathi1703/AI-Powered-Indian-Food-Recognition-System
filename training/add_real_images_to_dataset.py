@@ -4,12 +4,16 @@ Adds annotated real-world meal images to train and val splits to bridge the Sim-
 """
 
 import os
+import sys
 import shutil
 from PIL import Image
 
-PROJECT_ROOT = r"C:\Users\Shashank Tripathi\.gemini\antigravity\scratch\nutriiya-indian-food-ai"
-REAL_DIR = os.path.join(PROJECT_ROOT, "real_images")
-DATA_DIR = os.path.join(PROJECT_ROOT, "data", "processed")
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from config import (
+    PROJECT_ROOT,
+    REAL_IMAGES_DIR as REAL_DIR,
+    DATA_PROCESSED_DIR as DATA_DIR,
+)
 
 # True bounding box annotations for real images: (class_id, norm_cx, norm_cy, norm_w, norm_h)
 REAL_ANNOTATIONS = {

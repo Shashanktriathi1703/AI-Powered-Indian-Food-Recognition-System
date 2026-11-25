@@ -14,6 +14,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
+from config import DEFAULT_DEMO_IMAGE
 from models.pipeline import MealAnalyzerPipeline
 
 
@@ -21,7 +22,7 @@ def main():
     if len(sys.argv) > 1:
         img_path = sys.argv[1]
     else:
-        img_path = os.path.join(PROJECT_ROOT, "sample_predictions", "meal_01_thali.jpg")
+        img_path = DEFAULT_DEMO_IMAGE
 
     if not os.path.exists(img_path):
         print(f"Error: Image not found at {img_path}")

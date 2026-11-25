@@ -13,9 +13,8 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
+from config import SAMPLES_DIR
 from models.pipeline import MealAnalyzerPipeline
-
-SAMPLES_DIR = os.path.join(PROJECT_ROOT, "sample_predictions")
 
 
 def generate_benchmark_predictions():

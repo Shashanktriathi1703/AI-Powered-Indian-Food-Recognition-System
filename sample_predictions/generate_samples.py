@@ -5,10 +5,10 @@ import os
 import sys
 from PIL import Image
 
-sys.path.append(r"C:\Users\Shashank Tripathi\.gemini\antigravity\scratch\nutriiya-indian-food-ai")
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from config import SAMPLES_DIR
 from training.prepare_dataset import generate_single_meal_image
 
-SAMPLES_DIR = r"C:\Users\Shashank Tripathi\.gemini\antigravity\scratch\nutriiya-indian-food-ai\sample_predictions"
 os.makedirs(SAMPLES_DIR, exist_ok=True)
 
 sample_configs = [

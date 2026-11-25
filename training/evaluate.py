@@ -4,15 +4,19 @@ Evaluates the fine-tuned YOLOv8n detector on the held-out test split,
 computes precision, recall, mAP50, mAP50-95, latency, and exports JSON summary.
 """
 import os
+import sys
 import json
 import shutil
 import time
 from ultralytics import YOLO
 
-MODEL_WEIGHTS = r"C:\Users\Shashank Tripathi\.gemini\antigravity\scratch\nutriiya-indian-food-ai\models\weights\best.pt"
-DATASET_YAML = r"C:\Users\Shashank Tripathi\.gemini\antigravity\scratch\nutriiya-indian-food-ai\data\dataset.yaml"
-RUNS_DIR = r"C:\Users\Shashank Tripathi\.gemini\antigravity\scratch\nutriiya-indian-food-ai\runs\nutriiya_yolov8n"
-REPORTS_DIR = r"C:\Users\Shashank Tripathi\.gemini\antigravity\scratch\nutriiya-indian-food-ai\evaluation_reports"
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from config import (
+    MODEL_WEIGHTS_PATH as MODEL_WEIGHTS,
+    DATASET_YAML_PATH as DATASET_YAML,
+    EVAL_RUN_DIR as RUNS_DIR,
+    REPORTS_DIR,
+)
 
 def run_evaluation():
     print("=================================================================")
