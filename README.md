@@ -459,7 +459,7 @@ python training/evaluate.py          # runs evaluation on test split
 | `models/weights/best.pt` | Fine-tuned YOLOv8n (Indian food, 10 classes) | ~6.5 MB |
 | `yolov8n.pt` | Base pretrained YOLOv8n (Ultralytics) | ~6 MB |
 
-**Download:** [Google Drive Link](https://drive.google.com/your-link-here) ← *update before submission*
+**Download:** [Google Drive Link](https://drive.google.com/file/d/1jrF_MqF5CcBEvvRmc1NeFPHX2kytURay/view?usp=sharing) ← *update before submission*
 
 > Weights are excluded from git via `.gitignore` following standard ML project practice. The `training/train.py` script can regenerate them from scratch using `prepare_dataset.py`.
 
