@@ -82,6 +82,7 @@ The YOLOv8n model was fine-tuned on **synthetic + real images**. On real photos,
 ---
 
 ## 2. Task 1 — Food Detection & Classification
+![Uploading image.png…]()
 
 ### Model
 
