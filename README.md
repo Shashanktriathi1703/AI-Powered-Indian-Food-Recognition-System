@@ -189,7 +189,7 @@ A single 2D image cannot directly measure food weight. The system uses a **reaso
 
 ## 4. Task 3 - Nutrition Calculation
 
-Nutritional data sourced from **ICMR-NIN (National Institute of Nutrition) IFCT 2017** (Indian Food Composition Tables), publicly available Indian dietary reference data.
+Nutritional data sourced from **ICMR NIN (National Institute of Nutrition) IFCT 2017** (Indian Food Composition Tables), publicly available Indian dietary reference data.
 
 $$\text{Nutrient} = \frac{\text{per 100g value} \times \text{estimated\_g}}{100}$$
 
