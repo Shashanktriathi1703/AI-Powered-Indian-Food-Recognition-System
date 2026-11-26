@@ -69,6 +69,7 @@ RGB Meal Image
 ```
 
 ### Why a Hybrid Detector?
+<img width="757" height="762" alt="image" src="https://github.com/user-attachments/assets/c41db26d-9ea4-47cc-a16f-cf38ac7ad6b2" />
 
 The YOLOv8n model was fine-tuned on **synthetic + real images**. On real photos, it occasionally suffers from *domain gap* — collapsing all detections into one large box (e.g., labelling an entire thali as "Biryani 86%"). The hybrid approach fixes this:
 
