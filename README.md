@@ -82,7 +82,8 @@ The YOLOv8n model was fine-tuned on **synthetic + real images**. On real photos,
 ---
 
 ## 2. Task 1 — Food Detection & Classification
-![Uploading image.png…]()
+<img width="993" height="747" alt="image" src="https://github.com/user-attachments/assets/3e8c0d71-5b06-4bfa-b260-4eed838045ca" />
+
 
 ### Model
 
@@ -143,6 +144,7 @@ model.train(
 ---
 
 ## 3. Task 2 — Portion Estimation
+<img width="1267" height="961" alt="image" src="https://github.com/user-attachments/assets/01d8905b-f44b-45bc-88b7-08a742165afe" />
 
 A single 2D image cannot directly measure food weight. The system uses a **reasoned geometric approximation**:
 
