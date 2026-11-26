@@ -1,127 +1,192 @@
-# Nutriiya AI — Indian Food Recognition & Nutrition Intelligence System
-
+# Nutriiya AI: Indian Food Recognition and Nutrition Intelligence
+ 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C.svg)](https://pytorch.org/)
 [![YOLOv8](https://img.shields.io/badge/YOLOv8n-Fine--tuned-00FFFF.svg)](https://github.com/ultralytics/ultralytics)
 [![FastAPI](https://img.shields.io/badge/FastAPI-REST%20API-009688.svg)](https://fastapi.tiangolo.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-An end-to-end Computer Vision + Nutrition Intelligence pipeline built for the **Nutriiya candidate assignment**. The system accepts an RGB image of an Indian meal, detects and classifies multiple food items, estimates portion quantities (grams), and returns a full macronutrient breakdown mapped to **ICMR-NIN / IFCT 2017** reference data — all via a FastAPI REST endpoint.
-
+ 
+An end-to-end computer vision and nutrition pipeline built for the **Nutriiya candidate assignment**. It accepts an RGB image of an Indian meal, detects multiple food items, estimates each portion in grams, and returns calories and macronutrients through a FastAPI REST endpoint.
+ 
 ---
-
+ 
 ## Table of Contents
-
-1. [System Architecture](#1-system-architecture)
-2. [Task 1 — Food Detection & Classification](#2-task-1--food-detection--classification)
-3. [Task 2 — Portion Estimation](#3-task-2--portion-estimation)
-4. [Task 3 — Nutrition Calculation](#4-task-3--nutrition-calculation)
-5. [Task 4 — REST API](#5-task-4--rest-api)
-6. [Model Evaluation](#6-model-evaluation)
-7. [Sample Predictions](#7-sample-predictions)
-8. [Bonus Challenges](#8-bonus-challenges)
-9. [Setup & Execution](#9-setup--execution)
-10. [Model Weights](#10-model-weights)
-11. [Key Design Decisions & Limitations](#11-key-design-decisions--limitations)
-
+ 
+- [Features](#features)
+- [Quick Start](#quick-start)
+- [System Architecture](#system-architecture)
+- [Food Detection and Classification](#food-detection-and-classification)
+- [Portion Estimation](#portion-estimation)
+- [Nutrition Calculation](#nutrition-calculation)
+- [REST API](#rest-api)
+- [Model Evaluation](#model-evaluation)
+- [Sample Predictions](#sample-predictions)
+- [Bonus Challenges](#bonus-challenges)
+- [Design Decisions](#design-decisions)
+- [Limitations](#limitations)
+- [Author Contributions](#author-contributions)
+- [Credits and License](#credits-and-license)
 ---
-
-## 1. System Architecture
-
+ 
+## Features
+ 
+- **Multi-item detection** across 10 Indian food classes
+- **Hybrid recognition** combining fine-tuned YOLOv8n, HSV colour rules and a geometric thali fallback
+- **Portion estimation** from plate-referenced geometry and food density
+- **Nutrition breakdown** per item and for the whole meal
+- **REST API** with Swagger documentation and Pydantic validation
+- **CPU-only inference**, with no GPU or paid API required
+---
+ 
+## Quick Start
+ 
+### Prerequisites
+ 
+- Python 3.10 or later
+- pip
+### 1. Clone and install
+ 
+```bash
+git clone https://github.com/Shashanktriathi1703/AI-Powered-Indian-Food-Recognition-System.git
+cd AI-Powered-Indian-Food-Recognition-System
+ 
+python -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
+ 
+pip install -r requirements.txt
 ```
+ 
+### 2. Download the model weights (required)
+ 
+The fine-tuned weights are excluded from Git through `.gitignore`.
+ 
+**[Download `best.pt` from Google Drive](https://drive.google.com/file/d/1hsCzp6v3fpoxZAE3DcRpuO7de6iALl71/view?usp=sharing)** (about 6.5 MB) and place it at:
+ 
+```text
+models/weights/best.pt
+```
+ 
+### 3. Start the API
+ 
+```bash
+uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+```
+ 
+| Resource | URL |
+|---|---|
+| Swagger UI | http://localhost:8000/docs |
+| Health check | http://localhost:8000/health |
+ 
+### 4. Run the demo
+ 
+```bash
+python run_demo.py sample_predictions/meal_01_thali.jpg
+```
+ 
+The script prints a nutrition table and saves an annotated `<image>_demo_annotated.jpg`.
+ 
+### 5. Run the tests
+ 
+```bash
+python tests/test_pipeline.py
+```
+ 
+Expected output:
+ 
+```text
+test_nutrition_calculator passed.
+test_portion_estimator passed.
+Detected items in meal_01_thali: [...]
+test_pipeline_on_sample_thali passed.
+test_fastapi_endpoints passed.
+ALL TESTS PASSED SUCCESSFULLY!
+```
+ 
+---
+ 
+## System Architecture
+ 
+```text
 RGB Meal Image
       │
       ▼
-┌─────────────────────────────────────┐
-│  FoodDetector  (food_detector.py)   │
-│                                     │
-│  ① YOLOv8n (fine-tuned)            │
-│     • Filter boxes > 35% image area │
-│     • Filter confidence < 0.35      │
-│  ② Colour Classifier (HSV rules)   │
-│     • Re-verify each YOLO box       │
-│     • Override domain-gap errors    │
-│  ③ Geometric Thali Fallback        │
-│     • Detect plate region           │
-│     • Split into 7 compartments     │
-│     • Classify each by HSV features │
-│  ④ IoU Deduplication               │
-└──────────────┬──────────────────────┘
-               │  detections[]
-               ▼
-┌─────────────────────────────────────┐
-│  PortionEstimator                   │
-│  28cm thali reference → px/cm       │
-│  BBox area × shape_factor → cm²     │
-│  × food depth × density → grams     │
-└──────────────┬──────────────────────┘
-               │  estimated_quantity_g
-               ▼
-┌─────────────────────────────────────┐
-│  NutritionCalculator                │
-│  ICMR-NIN lookup → per 100g values  │
-│  × (grams / 100) → item nutrition   │
-│  Σ all items → total_nutrition      │
-└──────────────┬──────────────────────┘
-               │
-               ▼
-         FastAPI JSON Response
+┌──────────────────────────────────────┐
+│  FoodDetector (food_detector.py)     │
+│  1. Fine-tuned YOLOv8n               │
+│     - drop boxes > 35% of image area │
+│     - drop confidence < 0.35         │
+│  2. HSV colour verification          │
+│  3. Geometric thali fallback         │
+│  4. IoU de-duplication               │
+└──────────────────┬───────────────────┘
+                   │ detections
+                   ▼
+┌──────────────────────────────────────┐
+│  PortionEstimator                    │
+│  Plate scale → area → volume → grams │
+└──────────────────┬───────────────────┘
+                   │ estimated grams
+                   ▼
+┌──────────────────────────────────────┐
+│  NutritionCalculator                 │
+│  Per-100 g lookup → item and total   │
+└──────────────────┬───────────────────┘
+                   │
+                   ▼
+          FastAPI JSON Response
 ```
-
-### Why a Hybrid Detector?
-<img width="757" height="762" alt="image" src="https://github.com/user-attachments/assets/c41db26d-9ea4-47cc-a16f-cf38ac7ad6b2" />
-
-The YOLOv8n model was fine-tuned on **synthetic + real images**. On real photos, it occasionally suffers from *domain gap* — collapsing all detections into one large box (e.g., labelling an entire thali as "Biryani 86%"). The hybrid approach fixes this:
-
+ 
+### Why a hybrid detector?
+ 
+On real photos, the YOLOv8n model can suffer from a **domain gap**, for example by labelling an entire thali as a single "Biryani" box. Additional layers reduce this failure mode.
+ 
 | Layer | Role |
 |---|---|
-| **YOLOv8n** | Primary detector — good bounding box localisation |
-| **HSV Colour Classifier** | Re-classifies YOLO boxes using real-photo colour features (turmeric yellow → Dal, beige patches → Roti, red-orange → Curry) |
-| **Geometric Fallback** | When YOLO fails, splits plate into 7 layout-informed compartments and classifies each with colour rules |
-
+| **YOLOv8n** | Primary detector and bounding-box localisation |
+| **HSV colour classifier** | Re-checks each box using colour features and overrides likely errors |
+| **Geometric fallback** | If YOLO fails, splits the plate into 7 compartments and classifies each by colour |
+ 
 ---
-
-## 2. Task 1 — Food Detection & Classification
-<img width="993" height="747" alt="image" src="https://github.com/user-attachments/assets/3e8c0d71-5b06-4bfa-b260-4eed838045ca" />
-
-
+ 
+## Food Detection and Classification
+ 
 ### Model
-
-- **Architecture**: YOLOv8n (Nano) — 3.13M parameters, 8.6 GFLOPs
-- **Pretrained weights**: COCO/ImageNet backbone (Ultralytics official)
-- **Fine-tuned on**: Nutriiya Indian Food Vision Dataset (NIFVD-v1)
-- **Inference**: CPU-only (~55 ms/image, no GPU required)
-
-### Dataset Preparation
-
-| Split | Images | Annotated Instances |
-|---|---|---|
+ 
+| Property | Value |
+|---|---|
+| Architecture | YOLOv8n (3.13M parameters, 8.6 GFLOPs) |
+| Pretrained weights | Ultralytics YOLOv8n (COCO) |
+| Fine-tuning data | Nutriiya Indian Food Vision Dataset (NIFVD-v1) |
+| Inference | CPU, about 55 ms per image |
+ 
+### Dataset
+ 
+| Split | Images | Annotated instances |
+|---|---:|---:|
 | Train | 90 | ~378 |
 | Validation | 25 | ~105 |
-| Test (held-out) | 25 | ~105 |
+| Test (held out) | 25 | ~105 |
 | **Total** | **140** | **~588** |
-
-**Dataset composition:**
-- **130 synthetic images** — Generated programmatically via Python PIL: multi-dish thali layouts, each with 3–6 food items placed as coloured regions, bounding boxes auto-annotated in YOLO format. Random augmentations: background texture (wood/marble/slate), scale jitter ±10%, colour temperature variation.
-- **10 real images** — Sourced from Unsplash and Wikimedia Commons (CC0/Public Domain), manually annotated with YOLO-format bounding boxes.
-
-**10 Food Classes:**
-
+ 
+- **130 synthetic images:** multi-dish thali layouts generated with Python PIL, each containing 3 to 6 food regions with automatic YOLO annotations. Variations include background texture (wood, marble, slate), ±10% scale jitter and colour temperature.
+- **10 real images:** sourced from Unsplash and Wikimedia Commons, manually annotated in YOLO format.
+### Classes
+ 
 | ID | Class | Description |
-|---|---|---|
-| 0 | `rice` | Cooked steamed rice / plain rice |
+|:---:|---|---|
+| 0 | `rice` | Plain steamed rice |
 | 1 | `dal` | Lentil curry (dal tadka, dal fry, sambar) |
-| 2 | `roti` | Whole-wheat flatbread / chapati |
-| 3 | `paneer_curry` | Paneer / cottage cheese in spiced gravy |
-| 4 | `salad` | Kachumber salad / fresh vegetables |
+| 2 | `roti` | Whole-wheat flatbread or chapati |
+| 3 | `paneer_curry` | Paneer in spiced gravy |
+| 4 | `salad` | Kachumber or fresh vegetables |
 | 5 | `chole` | Chickpea curry |
-| 6 | `biryani` | Spiced layered rice dish |
-| 7 | `samosa` | Fried pastry snack |
-| 8 | `idli` | Steamed fermented rice cakes |
+| 6 | `biryani` | Spiced layered rice |
+| 7 | `samosa` | Fried stuffed pastry |
+| 8 | `idli` | Steamed fermented rice cake |
 | 9 | `dosa` | Fermented crepe |
-
-### Training Configuration
-
+ 
+### Training configuration
+ 
 ```python
 # training/train.py
 model = YOLO("yolov8n.pt")
@@ -132,276 +197,129 @@ model.train(
     batch=8,
     optimizer="AdamW",
     agnostic_nms=True,
-    mosaic=1.0,       # 4-image mosaic augmentation
-    fliplr=0.5,       # horizontal flip
-    degrees=10,       # rotation augmentation
-    scale=0.1,        # scale jitter
+    mosaic=1.0,    # 4-image mosaic
+    fliplr=0.5,    # horizontal flip
+    degrees=10,    # rotation
+    scale=0.1,     # scale jitter
 )
 ```
-
-**My contribution**: Wrote the full synthetic dataset generator (`training/prepare_dataset.py`), annotated 10 real images, implemented the colour-classifier + geometric fallback layer, and tuned all detection thresholds.
-
+ 
+### Retraining (optional)
+ 
+```bash
+python training/prepare_dataset.py   # generate the dataset
+python training/train.py             # fine-tune YOLOv8n
+python training/evaluate.py          # evaluate on the test split
+```
+ 
 ---
-
-## 3. Task 2 — Portion Estimation
-<img width="1267" height="961" alt="image" src="https://github.com/user-attachments/assets/01d8905b-f44b-45bc-88b7-08a742165afe" />
-
-A single 2D image cannot directly measure food weight. The system uses a **reasoned geometric approximation**:
-
-### Methodology
-
-1. **Plate Scale Calibration**  
-   Standard Indian steel thali diameter = **28 cm**. Plate pixel width → pixels/cm scale factor.
-
-2. **Footprint Area**  
-   `food_area_cm² = bbox_px² × shape_factor / (px_per_cm)²`
-
-3. **Volumetric Estimation** (class-specific):
-   - *Curries / Dal*: cylindrical katori model, depth ≈ 2.8 cm
-   - *Rice / Biryani*: paraboloid mound model, depth ≈ 3.0 cm
-   - *Roti*: planar — count-based (1 roti = 40 g, diameter ≈ 16 cm)
-   - *Samosa / Idli*: discrete piece count × unit weight
-
-4. **Density Mapping**  
-   `mass_g = volume_cm³ × food_density_g_per_cm³`
-
-5. **Realistic Clamping**  
-   Clamped to [min_portion_g, max_portion_g] with ±15% uncertainty interval.
-
-### Reference Table
-
-| Food | Shape Factor | Depth (cm) | Density (g/cm³) | Typical Serving |
+ 
+## Portion Estimation
+ 
+A single 2D image cannot measure food weight directly, so the system uses a geometric approximation.
+ 
+1. **Plate calibration:** a standard thali diameter of 28 cm gives the pixels-per-centimetre scale.
+2. **Footprint area:**
+```math
+\text{Area (cm}^2\text{)} = \frac{\text{box area (px}^2\text{)} \times \text{shape factor}}{(\text{pixels per cm})^2}
+```
+ 
+3. **Volume:** curries and dal use a cylindrical bowl (katori) model; rice and biryani use a mound model. Depth is class-specific.
+4. **Mass:**
+```math
+\text{Mass (g)} = \text{volume (cm}^3\text{)} \times \text{density (g/cm}^3\text{)}
+```
+ 
+5. **Clamping:** results are limited to a realistic range per class and reported with ±15% uncertainty.
+Roti, samosa, idli and dosa are estimated from piece counts and unit weights.
+ 
+### Volume-based foods
+ 
+| Food | Shape factor | Depth (cm) | Density (g/cm³) | Typical serving |
 |---|:---:|:---:|:---:|:---:|
 | Rice | 0.65 | 2.6 | 0.85 | 150 g |
 | Dal | 0.85 | 2.8 | 1.02 | 100 g |
-| Roti | 0.90 | — | count | 40 g/pc |
 | Paneer Curry | 0.80 | 2.5 | 1.05 | 120 g |
 | Salad | 0.50 | 2.0 | 0.35 | 50 g |
 | Chole | 0.80 | 2.6 | 1.02 | 130 g |
 | Biryani | 0.70 | 3.0 | 0.88 | 220 g |
-| Samosa | — | — | 65 g/pc | 130 g |
-| Idli | — | — | 45 g/pc | 90 g |
-| Dosa | — | — | 90 g/pc | 90 g |
-
-**Assumptions:** Camera at 60°–90° overhead angle; plate conforms to standard 28 cm ± 2 cm. A 2D RGB image cannot measure bowl depth or hidden oil content — estimates carry ±15% uncertainty and are stated as approximations, not guaranteed measurements.
-
+ 
+### Count-based foods
+ 
+| Food | Unit weight | Typical serving |
+|---|:---:|:---:|
+| Roti (about 16 cm diameter) | 40 g | 40 g per piece |
+| Samosa | 65 g | 130 g |
+| Idli | 45 g | 90 g |
+| Dosa | 90 g | 90 g |
+ 
+**Assumptions:** the camera angle is 60° to 90° (90° is directly overhead), and the plate is 28 ± 2 cm wide.
+ 
 ---
-
-## 4. Task 3 - Nutrition Calculation
-
-Nutritional data sourced from **ICMR NIN (National Institute of Nutrition) IFCT 2017** (Indian Food Composition Tables), publicly available Indian dietary reference data.
-
+ 
+## Nutrition Calculation
+ 
+Each nutrient is scaled from its per-100 g value:
+ 
 ```math
-\text{Nutrient} = \frac{\text{per 100 g value} \times \text{estimated weight (g)}}{100}
+\text{Nutrient} = \frac{\text{value per 100 g} \times \text{estimated weight (g)}}{100}
 ```
-
-### Reference Values (per 100 g)
-Example >> py run_demo.py sample_predictions/meal_01_thali.jpg
-=================================================================
-NUTRIIYA | AI & NUTRITION INTELLIGENCE
-Indian Food Recognition, Portion Estimation & Nutrition Analysis
-=================================================================
-Analyzing meal image: sample_predictions/meal_01_thali.jpg
-Visualization saved to: sample_predictions/meal_01_thali_demo_annotated.jpg
-
----------------------- MEAL BREAKDOWN ----------------------
-Food Item          | Conf   | Portion (g)  | Calories   | Protein  | Carbs    | Fat
-----------------------------------------------------------------------------------
-Dal                | 100%    | 205          | 213.2      | 13.9g      | 31.2g      | 3.7g      
-Salad              | 100%    | 25           | 7          | 0.3g      | 1.3g      | 0.1g        
-Paneer curry       | 98%    | 115          | 212.7      | 9.8g      | 8.3g      | 16.1g        
-Roti               | 92%    | 40           | 118.8      | 3.8g      | 22.4g      | 1.5g        
-Rice               | 92%    | 300          | 390        | 8.1g      | 84.6g      | 0.9g        
-Paneer curry       | 44%    | 90           | 166.5      | 7.7g      | 6.5g      | 12.6g        
-Rice               | 25%    | 135          | 175.5      | 3.6g      | 38.1g      | 0.4g        
-----------------------------------------------------------------------------------
-TOTAL MEAL         | --     | --           | 1283.7 kcal     | 47.2g      | 192.4g      | 35.3g
-=================================================================
-
-Nutriiya Standard JSON Output:
-{
-  "success": true,
-  "meal_items": [
-    {
-      "food_name": "Dal",
-      "confidence": 1.0,
-      "estimated_quantity_g": 205,
-      "nutrition": {
-        "calories": 213.2,
-        "protein": 13.9,
-        "carbs": 31.2,
-        "fat": 3.7
-      }
-    },
-    {
-      "food_name": "Salad",
-      "confidence": 1.0,
-      "estimated_quantity_g": 25,
-      "nutrition": {
-        "calories": 7,
-        "protein": 0.3,
-        "carbs": 1.3,
-        "fat": 0.1
-      }
-    },
-    {
-      "food_name": "Paneer curry",
-      "confidence": 0.98,
-      "estimated_quantity_g": 115,
-      "nutrition": {
-        "calories": 212.7,
-        "protein": 9.8,
-        "carbs": 8.3,
-        "fat": 16.1
-      }
-    },
-    {
-      "food_name": "Roti",
-      "confidence": 0.92,
-      "estimated_quantity_g": 40,
-      "nutrition": {
-        "calories": 118.8,
-        "protein": 3.8,
-        "carbs": 22.4,
-        "fat": 1.5
-      }
-    },
-    {
-      "food_name": "Rice",
-      "confidence": 0.92,
-      "estimated_quantity_g": 300,
-      "nutrition": {
-        "calories": 390,
-        "protein": 8.1,
-        "carbs": 84.6,
-        "fat": 0.9
-      }
-    },
-    {
-      "food_name": "Paneer curry",
-      "confidence": 0.44,
-      "estimated_quantity_g": 90,
-      "nutrition": {
-        "calories": 166.5,
-        "protein": 7.7,
-        "carbs": 6.5,
-        "fat": 12.6
-      }
-    },
-    {
-      "food_name": "Rice",
-      "confidence": 0.25,
-      "estimated_quantity_g": 135,
-      "nutrition": {
-        "calories": 175.5,
-        "protein": 3.6,
-        "carbs": 38.1,
-        "fat": 0.4
-      }
-    }
-  ],
-  "total_nutrition": {
-    "calories": 1283.7,
-    "protein": 47.2,
-      "food_name": "Rice",
-      "confidence": 0.25,
-      "estimated_quantity_g": 135,
-      "nutrition": {
-        "calories": 175.5,
-        "protein": 3.6,
-        "carbs": 38.1,
-        "fat": 0.4
-      }
-    }
-  ],
-  "total_nutrition": {
-    "calories": 1283.7,
-    "protein": 47.2,
-      "confidence": 0.25,
-      "estimated_quantity_g": 135,
-      "nutrition": {
-        "calories": 175.5,
-        "protein": 3.6,
-        "carbs": 38.1,
-        "fat": 0.4
-      }
-    }
-  ],
-  "total_nutrition": {
-    "calories": 1283.7,
-    "protein": 47.2,
-        "protein": 3.6,
-        "carbs": 38.1,
-        "fat": 0.4
-      }
-    }
-  ],
-  "total_nutrition": {
-    "calories": 1283.7,
-    "protein": 47.2,
-        "fat": 0.4
-      }
-    }
-  ],
-  "total_nutrition": {
-    "calories": 1283.7,
-    "protein": 47.2,
-    }
-  ],
-  "total_nutrition": {
-    "calories": 1283.7,
-    "protein": 47.2,
-  "total_nutrition": {
-    "calories": 1283.7,
-    "protein": 47.2,
-    "carbs": 192.4,
-    "calories": 1283.7,
-    "protein": 47.2,
-    "carbs": 192.4,
-    "protein": 47.2,
-    "carbs": 192.4,
-    "fat": 35.3
-    "carbs": 192.4,
-    "fat": 35.3
-    "fat": 35.3
-  }
-  }
-}                
-| Food | Calories (kcal) | Protein (g) | Carbs (g) | Fat (g) | Source |
-|---|:---:|:---:|:---:|:---:|---|
-| Rice (cooked) | 130.0 | 2.7 | 28.2 | 0.3 | IFCT A006 |
-| Dal (cooked) | 104.0 | 6.8 | 15.2 | 1.8 | IFCT B012 |
-| Roti (whole wheat) | 297.0 | 9.5 | 56.0 | 3.7 | IFCT |
-| Paneer Curry | 185.0 | 8.5 | 7.2 | 14.0 | Paneer + gravy composite |
-| Salad (kachumber) | 28.0 | 1.1 | 5.2 | 0.3 | IFCT fresh veg |
-| Chole | 140.0 | 7.0 | 20.0 | 3.5 | IFCT B003 |
+ 
+### Reference values (per 100 g)
+ 
+| Food | Energy (kcal) | Protein (g) | Carbs (g) | Fat (g) | Basis |
+|---|---:|---:|---:|---:|---|
+| Rice (cooked) | 130.0 | 2.7 | 28.2 | 0.3 | Cooked staple |
+| Dal (cooked) | 104.0 | 6.8 | 15.2 | 1.8 | Cooked dish |
+| Roti (whole wheat) | 297.0 | 9.5 | 56.0 | 3.7 | Prepared flatbread |
+| Paneer Curry | 185.0 | 8.5 | 7.2 | 14.0 | Paneer and gravy composite |
+| Salad (kachumber) | 28.0 | 1.1 | 5.2 | 0.3 | Fresh vegetables |
+| Chole | 140.0 | 7.0 | 20.0 | 3.5 | Cooked dish |
 | Biryani | 165.0 | 6.2 | 21.0 | 6.5 | Layered rice composite |
 | Samosa | 262.0 | 3.5 | 32.0 | 13.5 | Fried pastry |
-| Idli | 132.0 | 4.6 | 26.0 | 0.4 | Fermented rice/urad |
+| Idli | 132.0 | 4.6 | 26.0 | 0.4 | Fermented rice and urad |
 | Dosa | 168.0 | 3.9 | 29.0 | 3.8 | Fermented crepe |
-| Unknown (fallback) | 135.0 | 4.5 | 18.0 | 5.0 | Composite Indian average |
-
+| Unknown (fallback) | 135.0 | 4.5 | 18.0 | 5.0 | Composite average |
+ 
+> **Data note:** these are approximate values for prepared foods. [ICMR-NIN IFCT 2017](https://nin.res.in/ebooks/IFCT2017.pdf) is used as a reference, but it mainly reports raw foods, so the values above are not direct IFCT entries for cooked dishes.
+ 
 ---
-
-## 5. Task 4 — REST API
-
-Built with **FastAPI** — automatic Swagger UI, Pydantic schema validation, CORS middleware.
-
-### Endpoint
-
-```
-POST /analyze-meal
-Content-Type: multipart/form-data
-```
-
+ 
+## REST API
+ 
+### `POST /analyze-meal`
+ 
+Content type: `multipart/form-data`
+ 
 | Parameter | Type | Required | Default |
-|---|---|---|---|
-| `file` | image (JPEG/PNG/WebP) | ✅ | — |
-| `conf_threshold` | float | ❌ | 0.20 |
-| `include_visualization` | bool | ❌ | false |
-
-### Response Format
-
+|---|---|:---:|:---:|
+| `file` | Image (JPEG, PNG, WebP) | Yes | none |
+| `conf_threshold` | float | No | `0.20` |
+| `include_visualization` | bool | No | `false` |
+ 
+### cURL
+ 
+```bash
+curl -X POST "http://localhost:8000/analyze-meal" \
+     -F "file=@sample_predictions/meal_01_thali.jpg"
+```
+ 
+### Python
+ 
+```python
+import requests
+ 
+with open("sample_predictions/meal_01_thali.jpg", "rb") as f:
+    response = requests.post(
+        "http://localhost:8000/analyze-meal",
+        files={"file": ("meal.jpg", f, "image/jpeg")},
+    )
+ 
+print(response.json())
+```
+ 
+### Example response
+ 
 ```json
 {
   "success": true,
@@ -410,84 +328,42 @@ Content-Type: multipart/form-data
       "food_name": "Roti",
       "confidence": 0.67,
       "estimated_quantity_g": 55,
-      "nutrition": {
-        "calories": 163.4,
-        "protein": 5.2,
-        "carbs": 30.8,
-        "fat": 2.0
-      }
+      "nutrition": { "calories": 163.4, "protein": 5.2, "carbs": 30.8, "fat": 2.0 }
     },
     {
       "food_name": "Dal",
       "confidence": 0.65,
       "estimated_quantity_g": 190,
-      "nutrition": {
-        "calories": 197.6,
-        "protein": 12.9,
-        "carbs": 28.9,
-        "fat": 3.4
-      }
+      "nutrition": { "calories": 197.6, "protein": 12.9, "carbs": 28.9, "fat": 3.4 }
     },
     {
       "food_name": "Paneer Curry",
       "confidence": 0.57,
       "estimated_quantity_g": 160,
-      "nutrition": {
-        "calories": 296.0,
-        "protein": 13.6,
-        "carbs": 11.5,
-        "fat": 22.4
-      }
+      "nutrition": { "calories": 296.0, "protein": 13.6, "carbs": 11.5, "fat": 22.4 }
     }
   ],
-  "total_nutrition": {
-    "calories": 999.8,
-    "protein": 46.7,
-    "carbs": 125.6,
-    "fat": 34.9
-  }
+  "total_nutrition": { "calories": 657.0, "protein": 31.7, "carbs": 71.2, "fat": 27.8 }
 }
 ```
-
-### cURL Example
-
-```bash
-curl -X POST "http://localhost:8000/analyze-meal" \
-     -F "file=@sample_predictions/meal_01_thali.jpg"
-```
-
-### Python Client
-
-```python
-import requests
-
-with open("sample_predictions/meal_01_thali.jpg", "rb") as f:
-    r = requests.post("http://localhost:8000/analyze-meal",
-                      files={"file": ("meal.jpg", f, "image/jpeg")})
-print(r.json())
-```
-
+ 
 ---
-
-## 6. Model Evaluation
-
-Evaluated on the **25 held-out test images** (105 ground-truth instances).
-
-> **Note**: Metrics were computed on the synthetic+real mixed test split. The colour-classifier fallback layer handles real-photo domain gap — honest limitations documented in [Section 11](#11-key-design-decisions--limitations).
-
-### Overall Metrics
-
+ 
+## Model Evaluation
+ 
+Evaluated on 25 held-out test images (105 ground-truth instances) from the mixed synthetic and real dataset. These scores should not be read as real-world accuracy (see [Limitations](#limitations)).
+ 
+### Overall metrics
+ 
 | Metric | Value |
 |---|:---:|
 | mAP@50 | **93.5%** |
 | mAP@50:95 | **78.8%** |
-| Mean Precision | 91.2% |
-| Mean Recall | 94.6% |
-| Inference latency (CPU) | ~55 ms |
-| Full pipeline latency | ~100 ms |
-
-### Per-Class Breakdown
-
+| Mean precision | 91.2% |
+| Mean recall | 94.6% |
+ 
+### Per-class metrics
+ 
 | Class | Precision | Recall | mAP@50 |
 |---|:---:|:---:|:---:|
 | Rice | 0.966 | 1.000 | 0.995 |
@@ -500,179 +376,107 @@ Evaluated on the **25 held-out test images** (105 ground-truth instances).
 | Samosa | 0.956 | 1.000 | 0.980 |
 | Idli | 0.999 | 1.000 | 0.995 |
 | Dosa | 0.988 | 1.000 | 0.980 |
-
-Evaluation charts saved in `evaluation_reports/`: `BoxPR_curve.png`, `BoxF1_curve.png`, `confusion_matrix.png`, `results.png`.
-
----
-
-## 7. Sample Predictions
-
-Five benchmark meals in `sample_predictions/` (`.jpg` image + `_response.json`):
-
-| File | Meal Style | Detected Items | Calories |
-|---|---|---|:---:|
-| `meal_01_thali.jpg` | Classic Indian Thali | Dal, Rice, Paneer Curry, Roti, Salad | ~979 kcal |
-| `meal_02_punjabi.jpg` | North Indian Feast | Chole, Rice, Paneer Curry, Roti, Salad | ~1075 kcal |
-| `meal_03_south_indian.jpg` | South Indian Platter | Dal/Sambar, Dosa, Idli, Salad | ~396 kcal |
-| `meal_04_biryani_feast.jpg` | Biryani Meal | Biryani, Dal, Samosa, Salad | ~1102 kcal |
-| `meal_05_evening_snack.jpg` | Snack Platter | Chole, Samosa, Salad | ~602 kcal |
-
-Ten real food images are in `real_images/` with their JSON outputs.
-
----
-
-## 8. Bonus Challenges
-
-### Visually Similar Foods
-- **Dal vs Dosa/Idli sauce**: HSV colour classifier uses turmeric-yellow percentage (`yellow_pct > 0.35`) to confirm Dal
-- **Roti vs Rice**: white_pct + luminance + texture standard deviation distinguishes beige roti from white rice
-- **Paneer Curry vs Chole**: red_pct dominant → Paneer Curry; dark_pct dominant + low luminance → Chole
-
-### Unknown Food Safe Fallback
-- Detections below confidence threshold → mapped to `Unknown Dish`
-- Uses composite Indian meal nutritional average (135 kcal, 4.5g P, 18g C, 5g F per 100g)
-- Flagged with disclaimer in `meta.disclaimer` field
-
-### Latency Optimization
+ 
+Charts are saved in `evaluation_reports/`: `BoxPR_curve.png`, `BoxF1_curve.png`, `confusion_matrix.png` and `results.png`.
+ 
+### Latency (CPU)
+ 
 | Step | Time |
-|---|---|
-| Image decode + preprocess | ~1 ms |
+|---|---:|
+| Image decoding and preprocessing | ~1 ms |
 | YOLOv8n inference | ~55 ms |
-| Colour verification + fallback | ~5 ms |
-| Portion + nutrition calculation | ~2 ms |
-| JSON serialization | ~1 ms |
+| Colour verification and fallback | ~5 ms |
+| Portion and nutrition calculation | ~2 ms |
+| JSON serialisation | ~1 ms |
 | **Total** | **~64 ms** |
-
-Ready for ONNX/TensorRT export → <15ms on GPU.
-
-### Regional Indian Cuisines Extension
-1. Add classes: Rasam, Avial, Uttapam, Pav Bhaji, Dhokla, Luchi, Macher Jhol, Dal Baati
-2. Switch plate reference geometry for Banana Leaf (40×25 cm) vs round thali (28 cm)
-3. Two-level classification: `Course Type` → `Regional Variant`
-4. Collect crowd-sourced labelled images per region via mobile app
-
+ 
 ---
-
-## 9. Setup & Execution
-
-### Prerequisites
-- Python 3.10, 3.11, 3.12, or 3.14
-- pip
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/Shashanktriathi1703/AI-Powered-Indian-Food-Recognition-System.git
-cd AI-Powered-Indian-Food-Recognition-System
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-### Download Model Weights *(required)*
-
-> Model weights are not stored in git (GitHub 100MB limit).  
-> Download `best.pt` and place it at `models/weights/best.pt`.
-
-📥 **[Download best.pt from Google Drive](https://drive.google.com/file/d/1hsCzp6v3fpoxZAE3DcRpuO7de6iALl71/view?usp=sharing)**  
-
-```bash
-# After downloading:
-mkdir -p models/weights
-mv best.pt models/weights/best.pt
-```
-
-### Run Tests
-
-```bash
-python tests/test_pipeline.py
-```
-
-Expected output:
-```
-test_nutrition_calculator passed.
-test_portion_estimator passed.
-Detected items in meal_01_thali: [...]
-test_pipeline_on_sample_thali passed.
-test_fastapi_endpoints passed.
-ALL TESTS PASSED SUCCESSFULLY!
-```
-
-### Demo on Any Image
-
-```bash
-python run_demo.py sample_predictions/meal_01_thali.jpg
-# Or on your own photo:
-python run_demo.py path/to/your/meal.jpg
-```
-
-Outputs a table breakdown + saves `<image>_demo_annotated.jpg` with bounding boxes.
-
-### Launch REST API
-
-```bash
-uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
-```
-
-- Swagger UI: http://localhost:8000/docs
-- Health check: http://localhost:8000/health
-
-### Regenerate Synthetic Dataset (optional)
-
-```bash
-python training/prepare_dataset.py   # generates 140 synthetic images
-python training/train.py             # fine-tunes YOLOv8n (needs yolov8n.pt)
-python training/evaluate.py          # runs evaluation on test split
-```
-
+ 
+## Sample Predictions
+ 
+Five benchmark meals are provided in `sample_predictions/`, each as a `.jpg` image with a matching `_response.json`.
+ 
+| File | Meal style | Detected items | Energy |
+|---|---|---|---:|
+| `meal_01_thali.jpg` | Classic thali | Dal, Rice, Paneer Curry, Roti, Salad | ~979 kcal |
+| `meal_02_punjabi.jpg` | North Indian feast | Chole, Rice, Paneer Curry, Roti, Salad | ~1075 kcal |
+| `meal_03_south_indian.jpg` | South Indian platter | Dal/Sambar, Dosa, Idli, Salad | ~396 kcal |
+| `meal_04_biryani_feast.jpg` | Biryani meal | Biryani, Dal, Samosa, Salad | ~1102 kcal |
+| `meal_05_evening_snack.jpg` | Snack platter | Chole, Samosa, Salad | ~602 kcal |
+ 
+Ten real food images and their JSON outputs are in `real_images/`.
+ 
 ---
-
-## 10. Model Weights
-
-| File | Description | Size |
-|---|---|---|
-| `models/weights/best.pt` | Fine-tuned YOLOv8n (Indian food, 10 classes) | ~6.5 MB |
-| `yolov8n.pt` | Base pretrained YOLOv8n (Ultralytics) | ~6 MB |
-
-**Download:** [Google Drive Link](https://drive.google.com/file/d/1jrF_MqF5CcBEvvRmc1NeFPHX2kytURay/view?usp=sharing) ← *update before submission*
-
-> Weights are excluded from git via `.gitignore` following standard ML project practice. The `training/train.py` script can regenerate them from scratch using `prepare_dataset.py`.
-
+ 
+## Bonus Challenges
+ 
+### Visually similar foods
+ 
+| Confusion | Distinguishing signal |
+|---|---|
+| Dal vs dosa/idli accompaniments | Turmeric-yellow ratio (`yellow_pct > 0.35`) confirms dal |
+| Roti vs rice | White ratio, luminance and texture variation |
+| Paneer curry vs chole | Dominant red suggests paneer curry; dark ratio with low luminance suggests chole |
+ 
+### Unknown-food fallback
+ 
+Low-confidence detections are labelled `Unknown Dish`, use the composite average values above, and are flagged in `meta.disclaimer`.
+ 
+### Latency optimisation
+ 
+ONNX or TensorRT export is a planned next step to reduce inference time on GPU hardware.
+ 
+### Regional cuisine extension
+ 
+1. Add classes such as rasam, avial, uttapam, pav bhaji, dhokla, luchi, macher jhol and dal baati.
+2. Support other plate geometries, such as a banana leaf (40 × 25 cm).
+3. Classify in two levels: course type, then regional variant.
+4. Collect labelled images for each region through a mobile app.
 ---
-
-## 11. Key Design Decisions & Limitations
-
-### Design Decisions
-
+ 
+## Design Decisions
+ 
 | Decision | Rationale |
 |---|---|
-| YOLOv8n over larger variants | CPU-only inference target; nano is fastest with acceptable accuracy |
-| Synthetic dataset | Unlimited labelled data without annotation cost; real photos added for domain coverage |
-| Hybrid colour classifier | Bridges domain gap between synthetic training and real photo inference |
-| ICMR-NIN database | Authoritative Indian food reference; publicly available; no paid APIs |
-| FastAPI over Flask | Auto-generated OpenAPI docs, async support, Pydantic validation |
-
-### Honest Limitations
-
+| YOLOv8n over larger variants | Fast enough for CPU-only inference |
+| Synthetic training data | Labelled data without manual annotation cost |
+| Hybrid colour classifier | Reduces the synthetic-to-real domain gap |
+| Local nutrition database | Works offline with no paid API |
+| FastAPI | Automatic OpenAPI docs and Pydantic validation |
+ 
+---
+ 
+## Limitations
+ 
 | Limitation | Detail |
 |---|---|
-| **Domain gap** | Model trained primarily on synthetic images; real-photo accuracy relies on the colour-classifier fallback layer. With 500+ real labelled images per class and longer training, accuracy would improve significantly. |
-| **Portion estimation** | A 2D image cannot measure bowl depth, sauce viscosity, or hidden oil/ghee. All portions carry ±15% uncertainty and are stated as estimates, not measurements. |
-| **10 food classes only** | Indian cuisine has 1,000+ dishes. Extending requires a larger real dataset per additional class. |
-| **Static plate assumption** | Assumes 28 cm standard thali. Non-standard plates or close-up shots reduce portion accuracy. |
-
-### What I Implemented Myself
-- Synthetic thali image generator (`training/prepare_dataset.py`)
-- HSV-based colour food classifier (`models/food_detector.py` — `classify_food_by_color`)
-- Geometric thali compartment splitter (`_detect_plate_region`, `_thali_compartments`)
-- Hybrid YOLO + colour verification pipeline (`_run_yolo` + re-verification layer)
-- Volumetric portion estimator (`models/portion_estimator.py`)
-- ICMR-NIN nutrition database and calculator (`data/nutrition_db.json`, `models/nutrition_calculator.py`)
-- Full FastAPI endpoint with Pydantic schemas (`api/main.py`, `api/schemas.py`)
-- 4-suite automated test pipeline (`tests/test_pipeline.py`)
-
-### Pretrained Weights / External Resources Disclosed
-- YOLOv8n pretrained backbone: Ultralytics (AGPL-3.0)
-- Sample real images: Unsplash (CC0), Wikimedia Commons (CC0/Public Domain)
-- Nutrition data: ICMR-NIN IFCT 2017 (public reference data)
+| **Domain gap** | Training data is mostly synthetic, and real photos depend heavily on the colour fallback. A larger labelled real-image set (500+ per class) and longer training are expected to help. |
+| **Portion accuracy** | Depth, viscosity and hidden oil or ghee cannot be seen in a 2D image. The ±15% range is an assumption, not a measured error. |
+| **Class coverage** | Only 10 of the many Indian dishes are supported. |
+| **Plate assumption** | Non-standard plates and close-up shots reduce portion accuracy. |
+ 
+---
+ 
+## Author Contributions
+ 
+- Synthetic thali generator (`training/prepare_dataset.py`)
+- Manual annotation of 10 real images
+- HSV colour classifier (`classify_food_by_color` in `models/food_detector.py`)
+- Plate detection and compartment splitting (`_detect_plate_region`, `_thali_compartments`)
+- Hybrid YOLO and colour verification pipeline, including threshold tuning
+- Portion estimator (`models/portion_estimator.py`)
+- Nutrition database and calculator (`data/nutrition_db.json`, `models/nutrition_calculator.py`)
+- FastAPI service and schemas (`api/main.py`, `api/schemas.py`)
+- Automated test pipeline with 4 tests (`tests/test_pipeline.py`)
+---
+ 
+## Credits and License
+ 
+| Resource | Source |
+|---|---|
+| Pretrained YOLOv8n | [Ultralytics](https://github.com/ultralytics/ultralytics) (AGPL-3.0) |
+| Real sample images | Unsplash (Unsplash License) and Wikimedia Commons (CC0/Public Domain) |
+| Nutrition reference | ICMR-NIN IFCT 2017 |
+ 
+This project is released under the MIT License (see [LICENSE](LICENSE)). Third-party components remain under their own licenses.
+ 
