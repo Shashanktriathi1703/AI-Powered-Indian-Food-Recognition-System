@@ -194,7 +194,177 @@ Nutritional data sourced from **ICMR-NIN (National Institute of Nutrition) - IFC
 $$\text{Nutrient} - \frac{\text{per 100g value} \times \text{estimated\_g}}{100}$$
 
 ### Reference Values (per 100 g)
+Example >> py run_demo.py sample_predictions/meal_01_thali.jpg
+=================================================================
+NUTRIIYA | AI & NUTRITION INTELLIGENCE
+Indian Food Recognition, Portion Estimation & Nutrition Analysis
+=================================================================
+Analyzing meal image: sample_predictions/meal_01_thali.jpg
+Visualization saved to: sample_predictions/meal_01_thali_demo_annotated.jpg
 
+---------------------- MEAL BREAKDOWN ----------------------
+Food Item          | Conf   | Portion (g)  | Calories   | Protein  | Carbs    | Fat
+----------------------------------------------------------------------------------
+Dal                | 100%    | 205          | 213.2      | 13.9g      | 31.2g      | 3.7g      
+Salad              | 100%    | 25           | 7          | 0.3g      | 1.3g      | 0.1g        
+Paneer curry       | 98%    | 115          | 212.7      | 9.8g      | 8.3g      | 16.1g        
+Roti               | 92%    | 40           | 118.8      | 3.8g      | 22.4g      | 1.5g        
+Rice               | 92%    | 300          | 390        | 8.1g      | 84.6g      | 0.9g        
+Paneer curry       | 44%    | 90           | 166.5      | 7.7g      | 6.5g      | 12.6g        
+Rice               | 25%    | 135          | 175.5      | 3.6g      | 38.1g      | 0.4g        
+----------------------------------------------------------------------------------
+TOTAL MEAL         | --     | --           | 1283.7 kcal     | 47.2g      | 192.4g      | 35.3g
+=================================================================
+
+Nutriiya Standard JSON Output:
+{
+  "success": true,
+  "meal_items": [
+    {
+      "food_name": "Dal",
+      "confidence": 1.0,
+      "estimated_quantity_g": 205,
+      "nutrition": {
+        "calories": 213.2,
+        "protein": 13.9,
+        "carbs": 31.2,
+        "fat": 3.7
+      }
+    },
+    {
+      "food_name": "Salad",
+      "confidence": 1.0,
+      "estimated_quantity_g": 25,
+      "nutrition": {
+        "calories": 7,
+        "protein": 0.3,
+        "carbs": 1.3,
+        "fat": 0.1
+      }
+    },
+    {
+      "food_name": "Paneer curry",
+      "confidence": 0.98,
+      "estimated_quantity_g": 115,
+      "nutrition": {
+        "calories": 212.7,
+        "protein": 9.8,
+        "carbs": 8.3,
+        "fat": 16.1
+      }
+    },
+    {
+      "food_name": "Roti",
+      "confidence": 0.92,
+      "estimated_quantity_g": 40,
+      "nutrition": {
+        "calories": 118.8,
+        "protein": 3.8,
+        "carbs": 22.4,
+        "fat": 1.5
+      }
+    },
+    {
+      "food_name": "Rice",
+      "confidence": 0.92,
+      "estimated_quantity_g": 300,
+      "nutrition": {
+        "calories": 390,
+        "protein": 8.1,
+        "carbs": 84.6,
+        "fat": 0.9
+      }
+    },
+    {
+      "food_name": "Paneer curry",
+      "confidence": 0.44,
+      "estimated_quantity_g": 90,
+      "nutrition": {
+        "calories": 166.5,
+        "protein": 7.7,
+        "carbs": 6.5,
+        "fat": 12.6
+      }
+    },
+    {
+      "food_name": "Rice",
+      "confidence": 0.25,
+      "estimated_quantity_g": 135,
+      "nutrition": {
+        "calories": 175.5,
+        "protein": 3.6,
+        "carbs": 38.1,
+        "fat": 0.4
+      }
+    }
+  ],
+  "total_nutrition": {
+    "calories": 1283.7,
+    "protein": 47.2,
+      "food_name": "Rice",
+      "confidence": 0.25,
+      "estimated_quantity_g": 135,
+      "nutrition": {
+        "calories": 175.5,
+        "protein": 3.6,
+        "carbs": 38.1,
+        "fat": 0.4
+      }
+    }
+  ],
+  "total_nutrition": {
+    "calories": 1283.7,
+    "protein": 47.2,
+      "confidence": 0.25,
+      "estimated_quantity_g": 135,
+      "nutrition": {
+        "calories": 175.5,
+        "protein": 3.6,
+        "carbs": 38.1,
+        "fat": 0.4
+      }
+    }
+  ],
+  "total_nutrition": {
+    "calories": 1283.7,
+    "protein": 47.2,
+        "protein": 3.6,
+        "carbs": 38.1,
+        "fat": 0.4
+      }
+    }
+  ],
+  "total_nutrition": {
+    "calories": 1283.7,
+    "protein": 47.2,
+        "fat": 0.4
+      }
+    }
+  ],
+  "total_nutrition": {
+    "calories": 1283.7,
+    "protein": 47.2,
+    }
+  ],
+  "total_nutrition": {
+    "calories": 1283.7,
+    "protein": 47.2,
+  "total_nutrition": {
+    "calories": 1283.7,
+    "protein": 47.2,
+    "carbs": 192.4,
+    "calories": 1283.7,
+    "protein": 47.2,
+    "carbs": 192.4,
+    "protein": 47.2,
+    "carbs": 192.4,
+    "fat": 35.3
+    "carbs": 192.4,
+    "fat": 35.3
+    "fat": 35.3
+  }
+  }
+}                
 | Food | Calories (kcal) | Protein (g) | Carbs (g) | Fat (g) | Source |
 |---|:---:|:---:|:---:|:---:|---|
 | Rice (cooked) | 130.0 | 2.7 | 28.2 | 0.3 | IFCT A006 |
