@@ -191,7 +191,7 @@ A single 2D image cannot directly measure food weight. The system uses a **reaso
 
 Nutritional data sourced from **ICMR-NIN (National Institute of Nutrition) IFCT 2017** (Indian Food Composition Tables), publicly available Indian dietary reference data.
 
-$$\text{Nutrient} - \frac{\text{per 100g value} \times \text{estimated\_g}}{100}$$
+$$\text{Nutrient} = \frac{\text{per 100g value} \times \text{estimated\_g}}{100}$$
 
 ### Reference Values (per 100 g)
 Example >> py run_demo.py sample_predictions/meal_01_thali.jpg
